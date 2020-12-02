@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include <range/v3/all.hpp>
+#include <ranges>
 
 using namespace std;
 
@@ -8,7 +8,7 @@ struct PasswordLine
     int min_count;
     int max_count;
     char letter;
-    std::string password;
+    string password;
 };
 
 istream& operator>>(istream& in, PasswordLine& pwdline)
@@ -18,7 +18,7 @@ istream& operator>>(istream& in, PasswordLine& pwdline)
     return in;
 }
 
-int a(const std::vector<PasswordLine>& passwords)
+int a(const vector<PasswordLine>& passwords)
 {
     return ranges::count_if(passwords, [](const PasswordLine& pwdline) {
         auto occ = ranges::count(pwdline.password, pwdline.letter);
@@ -26,7 +26,7 @@ int a(const std::vector<PasswordLine>& passwords)
     });
 }
 
-int b(const std::vector<PasswordLine>& passwords)
+int b(const vector<PasswordLine>& passwords)
 {
     return ranges::count_if(passwords, [](const PasswordLine& pwdline) {
         return (pwdline.password.at(pwdline.min_count - 1) == pwdline.letter)
