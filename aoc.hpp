@@ -37,11 +37,7 @@ struct Vec
     {
     }
 
-    Vec(const Vec<SIZE>& other)
-    {
-        for (size_t i{0}; i < SIZE; i++)
-            elements[i] = other(i);
-    }
+    Vec(const Vec<SIZE>& other) = default;
 
     int operator()(size_t i) const
     {
@@ -90,9 +86,13 @@ struct Vec
     bool operator<(const Vec<SIZE>& other) const
     {
         for (size_t i{0}; i < SIZE; i++)
-            if (other(i) >= (*this)(i))
+        {
+            if ((*this)(i) < other(i))
+                return true;
+            if ((*this)(i) > other(i))
                 return false;
-        return true;
+        }
+        return false;
     }
 
     bool operator==(const Vec<SIZE>& other) const
@@ -171,7 +171,7 @@ inline std::vector<Vec3> neighbours(const Vec3& pos, bool diagonal = false)
     return result;
 }
 
-std::vector<std::string> split(const std::string& str, const std::string& delim)
+inline std::vector<std::string> split(const std::string& str, const std::string& delim)
 {
     std::vector<std::string> result;
     size_t start = 0, pos = 0;
@@ -184,8 +184,9 @@ std::vector<std::string> split(const std::string& str, const std::string& delim)
     return result;
 }
 
-std::string read_file(std::ifstream& file)
+inline std::string read_file(std::ifstream& file)
 {
+    assert(file.good());
     std::stringstream buf;
     buf << file.rdbuf();
     return buf.str();
