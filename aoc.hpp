@@ -192,6 +192,8 @@ inline std::string read_file(std::ifstream& file)
     return buf.str();
 }
 
+}  // namespace aoc
+
 template <typename T>
 std::ostream& operator<<(std::ostream& out, const std::vector<T>& vec)
 {
@@ -206,8 +208,6 @@ std::ostream& operator<<(std::ostream& out, const std::vector<T>& vec)
     out << ']';
     return out;
 }
-
-}  // namespace aoc
 
 
 namespace std {
