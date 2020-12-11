@@ -29,6 +29,10 @@ struct Vec
         };
     };
 
+    Vec()
+    {
+    }
+
     Vec(int x_, int y_) : x(x_), y(y_)
     {
     }
@@ -150,6 +154,28 @@ std::ostream& operator<<(std::ostream& out, const Vec<SIZE>& vec)
 using Vec2 = Vec<2>;
 using Vec3 = Vec<3>;
 
+const std::array<Vec2, 8> directions_diag_2{{
+    {0, -1},
+    {0, 1},
+    {1, 0},
+    {-1, 0},
+    {1, 1},
+    {-1, -1},
+    {1, -1},
+    {-1, 1},
+}};
+
+const std::array<Vec2, 8> directions_2{{
+    {0, -1},
+    {0, 1},
+    {1, 0},
+    {-1, 0},
+    {1, 1},
+    {-1, -1},
+    {1, -1},
+    {-1, 1},
+}};
+
 inline std::vector<Vec2> neighbours(const Vec2& pos, bool diagonal = false)
 {
     std::vector<Vec2> result;
@@ -209,6 +235,27 @@ std::ostream& operator<<(std::ostream& out, const std::vector<T>& vec)
     return out;
 }
 
+using i32 = int32_t;
+using i64 = int64_t;
+using u32 = uint32_t;
+using u64 = uint64_t;
+using u8 = uint8_t;
+
+template <size_t SIZE>
+aoc::Vec<SIZE> operator*(const aoc::Vec<SIZE>& vec, int scalar)
+{
+    aoc::Vec<SIZE> res;
+    for (size_t i{0}; i < SIZE; i++)
+        res(i) = vec(i) * scalar;
+    return res;
+}
+
+template <size_t SIZE>
+aoc::Vec<SIZE> operator*(int scalar, const aoc::Vec<SIZE>& vec)
+{
+    return vec * scalar;
+}
+
 
 namespace std {
 
@@ -223,4 +270,4 @@ struct hash<aoc::Vec<SIZE>>
         return res;
     }
 };
-}
+}  // namespace std
