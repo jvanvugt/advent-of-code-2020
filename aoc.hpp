@@ -21,7 +21,7 @@ struct Vec
     {
         struct
         {
-            int x, y, z;
+            int x, y, z, w;
         };
         struct
         {
@@ -38,6 +38,10 @@ struct Vec
     }
 
     Vec(int x_, int y_, int z_) : x(x_), y(y_), z(z_)
+    {
+    }
+
+    Vec(int x_, int y_, int z_, int w_) : x(x_), y(y_), z(z_), w(w_)
     {
     }
 
@@ -153,6 +157,7 @@ std::ostream& operator<<(std::ostream& out, const Vec<SIZE>& vec)
 
 using Vec2 = Vec<2>;
 using Vec3 = Vec<3>;
+using Vec4 = Vec<4>;
 
 const std::array<Vec2, 8> directions_diag_2{{
     {0, -1},
@@ -194,6 +199,19 @@ inline std::vector<Vec3> neighbours(const Vec3& pos, bool diagonal = false)
             for (int k = -1; k < 2; k++)
                 if (in_range(abs(i) + abs(j) + abs(k), 1, 2 + diagonal * 2))
                     result.emplace_back(pos.x + i, pos.y + j, pos.z + k);
+    return result;
+}
+
+inline std::vector<Vec4> neighbours(const Vec4& pos, bool diagonal = false)
+{
+    assert(diagonal);
+    std::vector<Vec4> result;
+    for (int i = -1; i < 2; i++)
+        for (int j = -1; j < 2; j++)
+            for (int k = -1; k < 2; k++)
+                for (int l = -1; l < 2; l++)
+                    if (i != 0 || j != 0 || k != 0 || l != 0)
+                        result.emplace_back(pos.x + i, pos.y + j, pos.z + k, pos.w + l);
     return result;
 }
 
