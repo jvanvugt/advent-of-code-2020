@@ -9,7 +9,7 @@ using Rule = vector<SubRule>;
 
 vector<string_view> matches_rule(const string_view& message, const vector<Rule>& rules, const Rule& rule);
 
-vector<string_view> match_subrule(string_view message, const vector<Rule>& rules, const SubRule& subrule, size_t si = 0)
+vector<string_view> match_subrule(const string_view& message, const vector<Rule>& rules, const SubRule& subrule, size_t si = 0)
 {
     if (si == subrule.size())  // Finished matching this subrule
         return {message};
