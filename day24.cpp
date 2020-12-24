@@ -16,26 +16,26 @@ enum class HexaDir
 
 const array<HexaDir, 6> hexa_dirs = {HexaDir::E, HexaDir::SE, HexaDir::SW, HexaDir::W, HexaDir::NW, HexaDir::NE};
 
-aoc::Vec3 dir_of(HexaDir dir)
+aoc::Vec2 dir_of(HexaDir dir)
 {
     switch (dir)
     {
-        case HexaDir::E: return {+1, -1, 0};
-        case HexaDir::SE: return {0, -1, +1};
-        case HexaDir::SW: return {-1, 0, +1};
-        case HexaDir::W: return {-1, +1, 0};
-        case HexaDir::NW: return {0, +1, -1};
-        case HexaDir::NE: return {+1, 0, -1};
-        default: return {0, 0, 0};
+        case HexaDir::E: return {+1, 0};
+        case HexaDir::SE: return {0, +1};
+        case HexaDir::SW: return {-1, +1};
+        case HexaDir::W: return {-1, 0};
+        case HexaDir::NW: return {0, -1};
+        case HexaDir::NE: return {+1, -1};
+        default: return {0, 0};
     }
 }
 
-set<aoc::Vec3> initial_state(const vector<vector<HexaDir>>& instrs)
+set<aoc::Vec2> initial_state(const vector<vector<HexaDir>>& instrs)
 {
-    set<aoc::Vec3> black_tiles;
+    set<aoc::Vec2> black_tiles;
     for (const auto& line : instrs)
     {
-        aoc::Vec3 pos{0, 0, 0};
+        aoc::Vec2 pos{0, 0};
         for (const auto dir : line)
             pos += dir_of(dir);
         if (black_tiles.count(pos))
@@ -51,16 +51,16 @@ u64 a(const vector<vector<HexaDir>>& instrs)
     return initial_state(instrs).size();
 }
 
-u64 b(vector<vector<HexaDir>> instrs)
+u64 b(const vector<vector<HexaDir>>& instrs)
 {
     auto black_tiles = initial_state(instrs);
     for (size_t i = 0; i < 100; i++)
     {
         auto new_black_tiles = black_tiles;
-        set<aoc::Vec3> considered;
+        set<aoc::Vec2> considered;
         for (const auto& active_pos : black_tiles)
         {
-            vector<aoc::Vec3> neighs;
+            vector<aoc::Vec2> neighs;
             for (HexaDir dir : hexa_dirs)
                 neighs.push_back(active_pos + dir_of(dir));
             neighs.push_back(active_pos);
