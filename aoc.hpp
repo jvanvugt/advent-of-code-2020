@@ -67,6 +67,12 @@ struct Vec
         return res;
     }
 
+    void operator+=(const Vec<SIZE>& other)
+    {
+        for (size_t i{0}; i < SIZE; i++)
+            (*this)(i) += other(i);
+    }
+
     Vec<SIZE> operator-(const Vec<SIZE>& other) const
     {
         Vec<SIZE> res;
